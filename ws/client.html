@@ -1,0 +1,47 @@
+
+<button id="button">button</button>
+<input id="message" value="">
+<div id="result">000</div>
+<ul id="list">
+	
+</ul>
+
+<script>
+
+	
+	let socket = new WebSocket("ws://localhost:8080");
+
+	let button = document.querySelector('#button');
+	let input = document.querySelector('#message');
+	let result = document.querySelector('#result');
+	let list = document.querySelector('#list');
+	
+
+	button.addEventListener('click', ()=>{
+		socket.send(input.value);
+	})
+
+	socket.onopen = function(e) {
+		console.log('соединение установлено');
+		socket.send('str');
+	};
+
+	socket.onmessage = function(event) {
+		console.log('данные с сервера: ' + event.data);
+		result.innerHTML = event.data
+	};
+
+	socket.onclose = function(event) {
+		if (event.wasClean) {
+			alert(`[close] Соединение закрыто чисто, код=${event.code} причина=${event.reason}`);
+		} else {
+			// например, сервер убил процесс или сеть недоступна
+			// обычно в этом случае event.code 1006
+			alert('[close] Соединение прервано');
+		}
+	};
+
+	socket.onerror = function(error) {
+		alert(`[error] ${error.message}`);
+	};
+</script>

@@ -1,0 +1,27 @@
+<div class="index__wrapper">
+
+	<h1>Доска объявлений</h1>
+
+	<div class="add-btn">
+		<a href="/create" class="btn">Разместить объявление</a>
+	</div>
+
+	<ul>
+		{{#each posts}}
+		<li>
+				<div class="advertising">
+					<p class="title__ad">{{ title }}</p>
+					<hr>
+					<p class="content__ad">{{ text }}</p>
+					<hr>
+					<p>
+						Размещено <span class="date">{{ time }}</span>
+					</p>
+
+					<a href="/delete/{{_id}}">delete</a>
+					<a href="/up/{{_id}}">Поднять</a>
+				</div>
+		</li>
+		{{/each}}
+	</ul>
+</div>
